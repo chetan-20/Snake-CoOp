@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class GameAsset : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static GameAsset instance;
+    [SerializeField] Sprite SnakeHeadSprite;
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        instance = this;
     }
 }
