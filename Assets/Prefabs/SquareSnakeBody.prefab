@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3585648278573387477}
   - component: {fileID: 2643426634004223348}
-  - component: {fileID: 181670056825577559}
+  - component: {fileID: 4734132036152662818}
   m_Layer: 0
   m_Name: SquareSnakeBody
   m_TagString: SnakeBody
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &181670056825577559
+--- !u!61 &4734132036152662818
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

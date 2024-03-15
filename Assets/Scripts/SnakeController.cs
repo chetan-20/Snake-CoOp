@@ -140,8 +140,24 @@ public class SnakeController : MonoBehaviour
         snakeSegments.Add(newSegment.transform); // Add the new segment to the list
     }
 
+    public void DestroyTail()
+    {
+        if (snakeSegments.Count > 0)
+        {
+            // Get the reference to the last segment's transform
+            Transform tailSegment = snakeSegments[snakeSegments.Count - 1];
+
+            // Remove the last segment from the list
+            snakeSegments.RemoveAt(snakeSegments.Count - 1);
+
+            // Destroy the GameObject of the last segment
+            Destroy(tailSegment.gameObject);
+        }
+    }
+
     private void MoveSnakeBody()
     {
+        
         for (int i = snakeSegments.Count - 1; i > 0; i--)
         {
             // Move the current segment to the position of the segment in front of it
