@@ -7,18 +7,20 @@ public class SnakeController : MonoBehaviour
 {
     private Vector2Int gridposition;
     private Vector2Int gridmovedirection;
-    //private float gridmovetimermax;
-    //private float gridmovetimer;
+    [SerializeField] private GameObject snakeBodyPrefab;
     private Rigidbody2D rb;
     [SerializeField] private int snakeSpeed = 1;
+    public static SnakeController Instance;
+    private List<Transform> snakeSegments = new List<Transform>();
     private void Awake()
     {
-        gridposition = new Vector2Int(10,10);
-       // gridmovetimermax = .25f;
-        //gridmovetimer = gridmovetimermax;
+        Instance= this;
+        gridposition = new Vector2Int(10,10);      
         gridmovedirection = new Vector2Int(1,0);
         RotateSprite(0f);
         rb = GetComponent<Rigidbody2D>();
+        snakeSegments.Add(transform);//Adding the head;
+        DefaultSnakeLength(5);
     }
 
     private void Update()
@@ -27,6 +29,11 @@ public class SnakeController : MonoBehaviour
         HandleGridMovement();
         ScreenWrap();
         
+    }
+
+    private void FixedUpdate()
+    {
+        MoveSnakeBody();
     }
 
     private void HandleInput()
@@ -72,14 +79,7 @@ public class SnakeController : MonoBehaviour
     private void HandleGridMovement()
     {
 
-        /*gridmovetimer += Time.deltaTime;
-        if (gridmovetimer >= gridmovetimermax)
-        {
-            gridmovetimer -= gridmovetimermax;
-            gridposition += gridmovedirection;
-            
-           transform.position = new Vector3(gridposition.x, gridposition.y);
-        }*/
+        
         Vector2 movement = gridmovedirection * snakeSpeed;
         rb.velocity = movement;
 
@@ -95,10 +95,10 @@ public class SnakeController : MonoBehaviour
         Vector3 currentPosition = transform.position;
 
         //screen boundary
-        float rightBound = 20f;
-        float leftBound = 0f;
-        float upperBound = 20f;
-        float lowerBound = 0f;
+        float rightBound = 19.5f;
+        float leftBound = 0.5f;
+        float upperBound = 19.5f;
+        float lowerBound = 0.5f;
 
         // Check if the object is outside the screen bounds
         if (currentPosition.x > rightBound)
@@ -129,4 +129,71 @@ public class SnakeController : MonoBehaviour
 
         
     }
+
+    public void GrowSnake()
+    {
+        // Get the position of the last segment
+        Vector3 lastSegmentPosition = snakeSegments[snakeSegments.Count - 1].position;
+
+        // Create a new snake segment at the last segment's position
+        GameObject newSegment = Instantiate(snakeBodyPrefab, lastSegmentPosition, Quaternion.identity, transform.parent);
+        snakeSegments.Add(newSegment.transform); // Add the new segment to the list
+    }
+
+    private void MoveSnakeBody()
+    {
+        for (int i = snakeSegments.Count - 1; i > 0; i--)
+        {
+            // Move the current segment to the position of the segment in front of it
+            snakeSegments[i].position = snakeSegments[i - 1].position;
+        }
+    }
+
+    private void DefaultSnakeLength(int bodyLength)
+    {
+        for(int i = 0;i < bodyLength; i++)
+        {
+            GrowSnake();
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("SnakeBody"))
+        {
+            Debug.Log("GameOVer");
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*private float gridmovetimermax;
+    //private float gridmovetimer;
+    /*gridmovetimer += Time.deltaTime;
+        if (gridmovetimer >= gridmovetimermax)
+        {
+            gridmovetimer -= gridmovetimermax;
+            gridposition += gridmovedirection;
+            
+           transform.position = new Vector3(gridposition.x, gridposition.y);
+        }
+    gridmovetimermax = .25f;
+    gridmovetimer = gridmovetimermax;*/

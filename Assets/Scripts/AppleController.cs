@@ -7,10 +7,11 @@ public class AppleController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Snake"))
-        {
-            Destroy(gameObject);
+        { 
             SpawnFood.Instance.SpawnApple();
-            Debug.Log("Eaten");
+            Destroy(gameObject);
+           SnakeController.Instance.GrowSnake();
+           
         }
     }
 }
