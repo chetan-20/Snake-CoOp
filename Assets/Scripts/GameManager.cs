@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
+        
         Time.timeScale = 0f;
         PausePanel.SetActive(true);
         LevelObject.SetActive(false);
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGame() 
     {
+        SoundController.Instance.PlaySound(Sounds.ButtonClickSound);
         Time.timeScale = 1f;
         PausePanel.SetActive(false);
         LevelObject.SetActive(true);
@@ -47,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadMenu()
     {
+        SoundController.Instance.PlaySound(Sounds.ButtonClickSound);
         SceneManager.LoadScene(0);
     }
 
@@ -60,6 +63,7 @@ public class GameManager : MonoBehaviour
 
     public void OnGameOver()
     {
+        SoundController.Instance.PlaySound(Sounds.GameOverSound);
         Time.timeScale = 0f;
         LevelObject.SetActive(false);
         ScoreUI.SetActive(false);
@@ -69,6 +73,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        SoundController.Instance.PlaySound(Sounds.ButtonClickSound);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
     }

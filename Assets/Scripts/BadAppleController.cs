@@ -9,6 +9,7 @@ public class BadAppleController : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<SnakeController>() != null)
         {
+            SoundController.Instance.PlaySound(Sounds.BadAppleEatingSound);
             SpawnFood.Instance.SpawnBadApple();
             Destroy(gameObject);
             SnakeController.Instance.DestroyTail(3);
