@@ -11,7 +11,10 @@ public class SnakeController : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private int snakeSpeed = 1;
     public static SnakeController Instance;
-    private List<Transform> snakeSegments = new List<Transform>();
+    internal List<Transform> snakeSegments = new List<Transform>();
+    internal int score = 0;
+    bool canCheckCollision = false;
+    float delaycollisionchecktime = 3f;//at start we give snake a default length and want to avoid collision that time , as snake isnt moving the newly spawn body collide
     private void Awake()
     {
         Instance= this;
@@ -20,7 +23,12 @@ public class SnakeController : MonoBehaviour
         RotateSprite(0f);
         rb = GetComponent<Rigidbody2D>();
         snakeSegments.Add(transform);//Adding the head;
-        DefaultSnakeLength(5);
+        DefaultSnakeLength(4);
+    }
+
+    private void Start()
+    {
+        Time.timeScale = 1.0f;
     }
 
     private void Update()
@@ -28,6 +36,7 @@ public class SnakeController : MonoBehaviour
         HandleInput();
         HandleGridMovement();
         ScreenWrap();
+        CheckSelfCollision();
         
     }
 
@@ -138,20 +147,24 @@ public class SnakeController : MonoBehaviour
         // Create a new snake segment at the last segment's position
         GameObject newSegment = Instantiate(snakeBodyPrefab, lastSegmentPosition, Quaternion.identity, transform.parent);
         snakeSegments.Add(newSegment.transform); // Add the new segment to the list
+       
     }
 
-    public void DestroyTail()
+    public void DestroyTail(int count)
     {
-        if (snakeSegments.Count > 0)
+        if (count<snakeSegments.Count)
         {
-            // Get the reference to the last segment's transform
-            Transform tailSegment = snakeSegments[snakeSegments.Count - 1];
+            for (int i = 0; i < count; i++)
+            {
+                // Get the reference to the last segment's transform
+                Transform tailSegment = snakeSegments[snakeSegments.Count - 1];
 
-            // Remove the last segment from the list
-            snakeSegments.RemoveAt(snakeSegments.Count - 1);
+                // Remove the last segment from the list
+                snakeSegments.RemoveAt(snakeSegments.Count - 1);
 
-            // Destroy the GameObject of the last segment
-            Destroy(tailSegment.gameObject);
+                // Destroy the GameObject of the last segment
+                Destroy(tailSegment.gameObject);
+            }
         }
     }
 
@@ -172,11 +185,32 @@ public class SnakeController : MonoBehaviour
             GrowSnake();
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    
+    private void CheckSelfCollision()
     {
-        if (collision.gameObject.CompareTag("SnakeBody"))
+       
+        if (canCheckCollision == true)
         {
-            Debug.Log("GameOVer");
+            
+            Vector3 headPosition = transform.position;
+
+            // Check if the head collides with any of the body segments
+            for (int i = 1; i < snakeSegments.Count; i++) // Start from index 1 to exclude head
+            {
+                if (snakeSegments[i].position == headPosition)
+                {
+                    GameManager.Instance.OnGameOver();
+                }
+            }
+        }
+        else
+        {
+            delaycollisionchecktime -= Time.deltaTime;
+            if(delaycollisionchecktime <= 0)
+            {
+                canCheckCollision = true;
+            }
         }
     }
 }
@@ -201,15 +235,3 @@ public class SnakeController : MonoBehaviour
 
 
 
-/*private float gridmovetimermax;
-    //private float gridmovetimer;
-    /*gridmovetimer += Time.deltaTime;
-        if (gridmovetimer >= gridmovetimermax)
-        {
-            gridmovetimer -= gridmovetimermax;
-            gridposition += gridmovedirection;
-            
-           transform.position = new Vector3(gridposition.x, gridposition.y);
-        }
-    gridmovetimermax = .25f;
-    gridmovetimer = gridmovetimermax;*/

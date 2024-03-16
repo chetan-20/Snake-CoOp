@@ -4,10 +4,5 @@ using UnityEngine;
 
 public class GameAsset : MonoBehaviour
 {
-    public static GameAsset instance;
-    [SerializeField] Sprite SnakeHeadSprite;
-    private void Awake()
-    {
-        instance = this;
-    }
+    
 }
