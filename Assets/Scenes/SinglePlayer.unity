@@ -2431,6 +2431,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ApplePrefab: {fileID: 4739220963856701148, guid: 1c5b8dd1e8c6e594dbe210fefc272715, type: 3}
   BadApplePrefab: {fileID: 5439136293875634066, guid: 2429a9e76b799964889fe0ea195deafa, type: 3}
+  ShieldPowerUpPrefab: {fileID: 6232173886062426155, guid: 77a388fd1c91fe741bc9af38a7ed09b0, type: 3}
+  ScoreBoostPrefab: {fileID: 922539755066811764, guid: b55f12e8c6e8796468cf0a87555c1924, type: 3}
+  SpeedBoostPowerUp: {fileID: 4555119731097969997, guid: 92fe83202d9a2e942a8b6eec4f4dfcf6, type: 3}
   minSpawntime: 1
   maxSpawntime: 2
   foodlifetime: 5

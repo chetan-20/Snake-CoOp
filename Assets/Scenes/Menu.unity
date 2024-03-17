@@ -298,15 +298,15 @@ MonoBehaviour:
   SoundMusic: {fileID: 1439665159}
   Sounds:
   - soundtype: 1
-    soundclip: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+    soundclip: {fileID: 8300000, guid: 81652031b64c342cc8dbc59c138d77c5, type: 3}
   - soundtype: 2
     soundclip: {fileID: 8300000, guid: df729d213c4be44a9b55cd109f5cd4f9, type: 3}
   - soundtype: 3
-    soundclip: {fileID: 8300000, guid: 4b4dd7245f6104c8c8eb07ccf6b386ed, type: 3}
+    soundclip: {fileID: 8300000, guid: cabfae866cab347928b74b7d0ca6bfa9, type: 3}
   - soundtype: 4
-    soundclip: {fileID: 8300000, guid: 81652031b64c342cc8dbc59c138d77c5, type: 3}
+    soundclip: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   - soundtype: 5
-    soundclip: {fileID: 8300000, guid: 7e9ee6dc04a5d40d1a5dfc4beb9865e7, type: 3}
+    soundclip: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
   - soundtype: 0
     soundclip: {fileID: 8300000, guid: 4a6a5bf6ec6423743825d34abe114dd3, type: 3}
 --- !u!1 &374434502

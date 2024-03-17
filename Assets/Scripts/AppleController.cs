@@ -12,8 +12,11 @@ public class AppleController : MonoBehaviour
             SoundController.Instance.PlaySound(Sounds.AppleEatingSound);
             SpawnFood.Instance.SpawnApple();
             Destroy(gameObject);
-           SnakeController.Instance.GrowSnake();
+            SnakeController.Instance.GrowSnake();
             SnakeController.Instance.score += 10;//since score should increase only after eating food
+            
         }
     }
+
+   
 }

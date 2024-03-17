@@ -147,7 +147,10 @@ public class SnakeController : MonoBehaviour
         // Create a new snake segment at the last segment's position
         GameObject newSegment = Instantiate(snakeBodyPrefab, lastSegmentPosition, Quaternion.identity, transform.parent);
         snakeSegments.Add(newSegment.transform); // Add the new segment to the list
-       
+        if (GetScoreBoostStatus())
+        {
+           score += 10;//Double the score for that duration
+        }
     }
 
     public void DestroyTail(int count)
@@ -189,19 +192,28 @@ public class SnakeController : MonoBehaviour
     
     private void CheckSelfCollision()
     {
+        
        
-        if (canCheckCollision == true)
+        if (canCheckCollision == true)//needed so collision isnt detected at start of the game
         {
-            
-            Vector3 headPosition = transform.position;
-
-            // Check if the head collides with any of the body segments
-            for (int i = 1; i < snakeSegments.Count; i++) // Start from index 1 to exclude head
+            if (!GetShieldStatus())//if shield is not active
             {
-                if (snakeSegments[i].position == headPosition)
+               
+                Vector3 headPosition = transform.position;
+
+                // Check if the head collides with any of the body segments
+                for (int i = 1; i < snakeSegments.Count; i++) // Start from index 1 to exclude head
                 {
-                    GameManager.Instance.OnGameOver();
+                    if (snakeSegments[i].position == headPosition)
+                    {
+                        GameManager.Instance.OnGameOver();
+                    }
                 }
+            }
+            else
+            {
+              
+                return;
             }
         }
         else
@@ -211,6 +223,32 @@ public class SnakeController : MonoBehaviour
             {
                 canCheckCollision = true;
             }
+        }
+    }
+
+    private bool GetShieldStatus()
+    {
+       
+        if(ShieldPowerUp.Instance != null && ShieldPowerUp.Instance.ispowerupactive)
+        {
+            
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool GetScoreBoostStatus()
+    {
+        if (ScoreBooster.Instance != null && ScoreBooster.Instance.ispowerupactive)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
