@@ -87,11 +87,12 @@ public class SnakeController : MonoBehaviour
 
     private void HandleGridMovement()
     {
-
         
-        Vector2 movement = gridmovedirection * snakeSpeed;
-        rb.velocity = movement;
-
+           
+            Vector2 movement = gridmovedirection * snakeSpeed;
+            rb.velocity = movement;
+        
+       
     }
 
     private void RotateSprite(float angle)
@@ -229,7 +230,7 @@ public class SnakeController : MonoBehaviour
     private bool GetShieldStatus()
     {
        
-        if(ShieldPowerUp.Instance != null && ShieldPowerUp.Instance.ispowerupactive)
+        if(ShieldPowerUp.Instance != null && ShieldPowerUp.Instance.iseaten)
         {
             
             return true;
@@ -242,7 +243,19 @@ public class SnakeController : MonoBehaviour
 
     private bool GetScoreBoostStatus()
     {
-        if (ScoreBooster.Instance != null && ScoreBooster.Instance.ispowerupactive)
+        if (ScoreBooster.Instance != null && ScoreBooster.Instance.iseaten)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool GetSpeedBoostStatus()
+    {
+        if (SpeedBoostScript.Instance != null && SpeedBoostScript.Instance.iseaten)
         {
             return true;
         }

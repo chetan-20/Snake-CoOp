@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class ScoreBooster : MonoBehaviour
+public class SpeedBoostScript : MonoBehaviour
 {
-    public static ScoreBooster Instance;
+    public static SpeedBoostScript Instance;
     private float powerupduration = 10f;
     internal bool iseaten = false;//will be used in other class to set up the effects
- 
+
     private void Awake()
     {
         Instance = this;
@@ -21,17 +22,17 @@ public class ScoreBooster : MonoBehaviour
             StartCoroutine(RemoveEffectAfterDelay(powerupduration));
         }
     }
-   
+
     private void ApplyEffect()
     {
         Debug.Log("Started Effect");
-        SoundController.Instance.PlaySound(Sounds.PowerUpSound); 
-        iseaten = true;              
+        SoundController.Instance.PlaySound(Sounds.PowerUpSound);
+        iseaten = true;
         gameObject.GetComponent<Renderer>().enabled = false;
-        gameObject.GetComponent<BoxCollider2D>().enabled = false;      
-       
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+
     }
-  private IEnumerator RemoveEffectAfterDelay(float delay)
+    private IEnumerator RemoveEffectAfterDelay(float delay)
     {
         Debug.Log("Started coroutine");
         yield return new WaitForSeconds(delay);
@@ -41,9 +42,6 @@ public class ScoreBooster : MonoBehaviour
     private void RemoveEffect()
     {
         Debug.Log("Effect Removed");
-        iseaten = false;             
-        
+        iseaten = false; 
     }
-
-    
 }

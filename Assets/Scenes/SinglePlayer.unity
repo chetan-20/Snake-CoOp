@@ -428,6 +428,56 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &333117426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 333117427}
+  - component: {fileID: 333117428}
+  m_Layer: 0
+  m_Name: SpawnPowerUps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &333117427
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333117426}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 70.64409, y: 55.986954, z: -0.14293152}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 808294233}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &333117428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333117426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 815715c99088ad243bd611e462268ddd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShieldPowerUpPrefab: {fileID: 6232173886062426155, guid: 77a388fd1c91fe741bc9af38a7ed09b0, type: 3}
+  ScoreBoostPrefab: {fileID: 922539755066811764, guid: b55f12e8c6e8796468cf0a87555c1924, type: 3}
+  SpeedBoostPowerUp: {fileID: 4555119731097969997, guid: 92fe83202d9a2e942a8b6eec4f4dfcf6, type: 3}
+  minSpawntime: 1
+  maxSpawntime: 5
+  foodlifetime: 10
 --- !u!1 &392587441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1249,6 +1299,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 333117427}
   - {fileID: 2012567399}
   - {fileID: 2110582567}
   - {fileID: 1037932370}
@@ -1594,8 +1645,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280054783
-  m_fontColor: {r: 1, g: 0.45181584, b: 0.10849059, a: 1}
+    rgba: 4278255602
+  m_fontColor: {r: 0.9502846, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1923,7 +1974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.038784087, g: 0.3490566, b: 0, a: 1}
+  m_Color: {r: 0.15873088, g: 0.22105701, b: 0.38679248, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2317,8 +2368,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280054783
-  m_fontColor: {r: 1, g: 0.45181584, b: 0.10849059, a: 1}
+    rgba: 4279365341
+  m_fontColor: {r: 0.8671914, g: 0.9339623, b: 0.066082224, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2431,9 +2482,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ApplePrefab: {fileID: 4739220963856701148, guid: 1c5b8dd1e8c6e594dbe210fefc272715, type: 3}
   BadApplePrefab: {fileID: 5439136293875634066, guid: 2429a9e76b799964889fe0ea195deafa, type: 3}
-  ShieldPowerUpPrefab: {fileID: 6232173886062426155, guid: 77a388fd1c91fe741bc9af38a7ed09b0, type: 3}
-  ScoreBoostPrefab: {fileID: 922539755066811764, guid: b55f12e8c6e8796468cf0a87555c1924, type: 3}
-  SpeedBoostPowerUp: {fileID: 4555119731097969997, guid: 92fe83202d9a2e942a8b6eec4f4dfcf6, type: 3}
   minSpawntime: 1
   maxSpawntime: 2
   foodlifetime: 5
