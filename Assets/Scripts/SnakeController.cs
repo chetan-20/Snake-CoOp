@@ -4,8 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 public class SnakeController : MonoBehaviour
-{
-    private Vector2Int gridposition;
+{  
     private Vector2Int gridmovedirection;
     [SerializeField] private GameObject snakeBodyPrefab;
     private Rigidbody2D rb;
@@ -17,8 +16,7 @@ public class SnakeController : MonoBehaviour
     float delaycollisionchecktime = 3f;//at start we give snake a default length and want to avoid collision that time , as snake isnt moving the newly spawn body collide
     private void Awake()
     {
-        Instance= this;
-        gridposition = new Vector2Int(10,10);      
+        Instance= this;            
         gridmovedirection = new Vector2Int(1,0);
         RotateSprite(0f);
         rb = GetComponent<Rigidbody2D>();
