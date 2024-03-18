@@ -10,7 +10,7 @@ public class CoopSnakeController : MonoBehaviour
     [SerializeField] private int snakeSpeed = 7;
     public static CoopSnakeController Instance;
     internal List<Transform> snakeSegments = new List<Transform>();
-    internal int score = 0;
+    //internal int score = 0;
     bool canCheckCollision = false;
     float delaycollisionchecktime = 3f;//at start we give snake a default length and want to avoid collision that time , as snake isnt moving the newly spawn body collide
     private void Awake()
@@ -34,7 +34,7 @@ public class CoopSnakeController : MonoBehaviour
         HandleGridMovement();
         ScreenWrap();
         CheckSelfCollision();
-        GetSpeedBoostStatus();
+        //GetSpeedBoostStatus();
     }
 
     private void FixedUpdate()
@@ -44,7 +44,7 @@ public class CoopSnakeController : MonoBehaviour
 
     private void HandleInput()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             if (gridmovedirection.y != -1)
             {
@@ -53,7 +53,7 @@ public class CoopSnakeController : MonoBehaviour
                 RotateSprite(90f);
             }
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             if (gridmovedirection.y != 1)
             {
@@ -62,7 +62,7 @@ public class CoopSnakeController : MonoBehaviour
                 RotateSprite(-90f);
             }
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             if (gridmovedirection.x != -1)
             {
@@ -71,7 +71,7 @@ public class CoopSnakeController : MonoBehaviour
                 RotateSprite(0f);
             }
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             if (gridmovedirection.x != 1)
             {
@@ -141,10 +141,10 @@ public class CoopSnakeController : MonoBehaviour
         // Create a new snake segment at the last segment's position
         GameObject newSegment = Instantiate(snakeBodyPrefab, lastSegmentPosition, Quaternion.identity, transform.parent);
         snakeSegments.Add(newSegment.transform); // Add the new segment to the list
-        if (GetScoreBoostStatus())
+       /* if (GetScoreBoostStatus())
         {
             score += 10;//Double the score for that duration
-        }
+        }*/
     }
 
     public void DestroyTail(int count)
@@ -190,8 +190,8 @@ public class CoopSnakeController : MonoBehaviour
 
         if (canCheckCollision == true)//needed so collision isnt detected at start of the game
         {
-            if (!GetShieldStatus())//if shield is not active
-            {
+           /* if (!GetShieldStatus())//if shield is not active
+            {*/
 
                 Vector3 headPosition = transform.position;
 
@@ -204,12 +204,12 @@ public class CoopSnakeController : MonoBehaviour
                     }
                 }
             }
-            else
+            /*else
             {
 
                 return;
             }
-        }
+        }*/
         else
         {
             delaycollisionchecktime -= Time.deltaTime;
@@ -220,7 +220,7 @@ public class CoopSnakeController : MonoBehaviour
         }
     }
 
-    private bool GetShieldStatus()
+   /* private bool GetShieldStatus()
     {
 
         if (ShieldPowerUp.Instance != null && ShieldPowerUp.Instance.iseaten)
@@ -232,9 +232,9 @@ public class CoopSnakeController : MonoBehaviour
         {
             return false;
         }
-    }
+    }*/
 
-    private bool GetScoreBoostStatus()
+    /*private bool GetScoreBoostStatus()
     {
         if (ScoreBooster.Instance != null && ScoreBooster.Instance.iseaten)
         {
@@ -244,9 +244,9 @@ public class CoopSnakeController : MonoBehaviour
         {
             return false;
         }
-    }
+    }*/
 
-    private void GetSpeedBoostStatus()
+    /*private void GetSpeedBoostStatus()
     {
         if (SpeedBoostScript.Instance != null && SpeedBoostScript.Instance.iseaten)
         {
@@ -256,5 +256,5 @@ public class CoopSnakeController : MonoBehaviour
         {
             snakeSpeed = 7;
         }
-    }
+    }*/
 }
