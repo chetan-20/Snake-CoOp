@@ -9,7 +9,7 @@ public class SnakeController : MonoBehaviour
     private Vector2Int gridmovedirection;
     [SerializeField] private GameObject snakeBodyPrefab;
     private Rigidbody2D rb;
-    [SerializeField] private int snakeSpeed = 1;
+    [SerializeField] private int snakeSpeed = 7;
     public static SnakeController Instance;
     internal List<Transform> snakeSegments = new List<Transform>();
     internal int score = 0;
@@ -37,7 +37,7 @@ public class SnakeController : MonoBehaviour
         HandleGridMovement();
         ScreenWrap();
         CheckSelfCollision();
-        
+        GetSpeedBoostStatus();
     }
 
     private void FixedUpdate()
@@ -86,13 +86,9 @@ public class SnakeController : MonoBehaviour
     }
 
     private void HandleGridMovement()
-    {
-        
-           
+    {               
             Vector2 movement = gridmovedirection * snakeSpeed;
-            rb.velocity = movement;
-        
-       
+            rb.velocity = movement;              
     }
 
     private void RotateSprite(float angle)
@@ -253,15 +249,15 @@ public class SnakeController : MonoBehaviour
         }
     }
 
-    private bool GetSpeedBoostStatus()
+    private void GetSpeedBoostStatus()
     {
         if (SpeedBoostScript.Instance != null && SpeedBoostScript.Instance.iseaten)
         {
-            return true;
+            snakeSpeed = 10;
         }
         else
         {
-            return false;
+            snakeSpeed = 7;
         }
     }
 }

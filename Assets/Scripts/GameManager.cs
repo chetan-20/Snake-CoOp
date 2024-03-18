@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject ScoreUI;
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private TextMeshProUGUI FinalScore;
+    [SerializeField] private GameObject PowerUpUI;
     public static GameManager Instance;
 
     private void Awake()
@@ -23,7 +24,8 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
         OnEscapePressed();
     }
-
+   
+    
     private void UpdateScoreUI()
     {
         scoreUI.text="Score : " + SnakeController.Instance.score;
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
         PausePanel.SetActive(true);
         LevelObject.SetActive(false);
         ScoreUI.SetActive(false);
+        PowerUpUI.SetActive(false);
     }
 
     public void ResumeGame() 
@@ -45,6 +48,7 @@ public class GameManager : MonoBehaviour
         PausePanel.SetActive(false);
         LevelObject.SetActive(true);
         ScoreUI.SetActive(true);
+        PowerUpUI.SetActive(true);
     }
 
     public void LoadMenu()
@@ -68,6 +72,7 @@ public class GameManager : MonoBehaviour
         LevelObject.SetActive(false);
         ScoreUI.SetActive(false);
         GameOverPanel.SetActive(true);
+        PowerUpUI.SetActive(false);
         FinalScore.text = "Final Score : " + SnakeController.Instance.score;
     }
 

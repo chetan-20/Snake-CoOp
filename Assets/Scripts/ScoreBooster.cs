@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class ScoreBooster : MonoBehaviour
@@ -7,7 +6,7 @@ public class ScoreBooster : MonoBehaviour
     public static ScoreBooster Instance;
     private float powerupduration = 10f;
     internal bool iseaten = false;//will be used in other class to set up the effects
- 
+    internal bool iseffectover = false;
     private void Awake()
     {
         Instance = this;
@@ -17,33 +16,28 @@ public class ScoreBooster : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<SnakeController>() != null)
         {
-            ApplyEffect();
-            StartCoroutine(RemoveEffectAfterDelay(powerupduration));
+           ApplyEffect();
+           Invoke("RemoveEffect",powerupduration);           
         }
     }
    
     private void ApplyEffect()
     {
-        Debug.Log("Started Effect");
-        SoundController.Instance.PlaySound(Sounds.PowerUpSound); 
+        
+      
+        SoundController.Instance.PlaySound(Sounds.PowerUpSound);
+        SpawnPowerUps.Instance.PowerUpPanel.text = "2X Score!";
         iseaten = true;              
         gameObject.GetComponent<Renderer>().enabled = false;
         gameObject.GetComponent<BoxCollider2D>().enabled = false;      
        
     }
-  private IEnumerator RemoveEffectAfterDelay(float delay)
-    {
-        Debug.Log("Started coroutine");
-        yield return new WaitForSeconds(delay);
-        RemoveEffect();
-        Destroy(gameObject);
-    }
+ 
     private void RemoveEffect()
-    {
-        Debug.Log("Effect Removed");
-        iseaten = false;             
-        
+    {      
+              
+        iseffectover = true;       
     }
 
-    
+   
 }

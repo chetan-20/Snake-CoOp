@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class SpawnPowerUps : MonoBehaviour
@@ -7,9 +8,11 @@ public class SpawnPowerUps : MonoBehaviour
     [SerializeField] private GameObject ShieldPowerUpPrefab;
     [SerializeField] private GameObject ScoreBoostPrefab;
     [SerializeField] private GameObject SpeedBoostPowerUp;
+    
+    [SerializeField] internal TextMeshProUGUI PowerUpPanel;
     [SerializeField] private float minSpawntime = 5f;
     [SerializeField] private float maxSpawntime = 10f;
-    [SerializeField] private float foodlifetime = 7f;
+    [SerializeField] internal float poweruplifetime = 25f;
     public static SpawnPowerUps Instance;
     internal GameObject currentpowerup;
     bool IsPowerUpSpawned = false;//Only one power up on screen at a time
@@ -21,15 +24,55 @@ public class SpawnPowerUps : MonoBehaviour
     }
     private void Start()
     {
-        InvokeRepeating("SpawnPowerUp", 10f, Random.Range(minSpawntime, maxSpawntime));
+        InvokeRepeating("SpawnPowerUp", 5f, Random.Range(minSpawntime, maxSpawntime));
     }
     private void Update()
     {
-        if (currentpowerup == null)
-        {
-            IsPowerUpSpawned = false;
-        }
+        SetCurrentPowerUpStatus();
+        CheckIsEffectover();
     }
+
+    private void SetCurrentPowerUpStatus()
+    {
+        if (currentpowerup == null)
+            {
+                IsPowerUpSpawned = false;
+            }
+    }
+
+   
+    private void CheckIsEffectover()
+    {
+        if (SpeedBoostScript.Instance != null)
+        {          
+            if (SpeedBoostScript.Instance.iseffectover == true)
+            {
+                PowerUpPanel.text = "";
+                Destroy(currentpowerup); 
+                
+            }
+            
+        }
+         if (ScoreBooster.Instance != null)
+         {          
+            if (ScoreBooster.Instance.iseffectover == true)
+            {
+                PowerUpPanel.text = "";
+                Destroy(currentpowerup);
+            }
+            
+         }
+         if (ShieldPowerUp.Instance != null)
+         {         
+            if (ShieldPowerUp.Instance.iseffectover == true)
+            {
+                PowerUpPanel.text = "";
+                Destroy(currentpowerup);
+            }
+            
+         }              
+    }
+
     public void SpawnPowerUp()
     {
 
@@ -49,33 +92,22 @@ public class SpawnPowerUps : MonoBehaviour
             {
                 currentpowerup = Instantiate(ShieldPowerUpPrefab, spawnposition, Quaternion.identity);
                 IsPowerUpSpawned = true;
-                if (ShieldPowerUp.Instance.iseaten == true)
-                {
-                    return;
-                }
+               
             }
             else if (randomnumber == 1)
             {
                 currentpowerup = Instantiate(ScoreBoostPrefab, spawnposition, Quaternion.identity);
                 IsPowerUpSpawned = true;
-                if (ScoreBooster.Instance.iseaten == true)
-                {
-                    return;
-                }
+                
             }
             else if (randomnumber == 2)
             {
                 currentpowerup = Instantiate(SpeedBoostPowerUp, spawnposition, Quaternion.identity);
                 IsPowerUpSpawned = true;
-                if (SpeedBoostScript.Instance.iseaten==true)
-                {
-                    return;
-                }
-            }           
-            if(currentpowerup!=null)
-            {
-                Destroy(currentpowerup, foodlifetime);
+              
             }
+            Destroy(currentpowerup,poweruplifetime);
+            PowerUpPanel.text = "";
         }
     }
 }
