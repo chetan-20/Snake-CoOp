@@ -5,13 +5,14 @@ using UnityEngine;
 public class CoopSnakeController : MonoBehaviour
 {
     private Vector2Int gridmovedirection;
-    [SerializeField] private GameObject snakeBodyPrefab;
+    [SerializeField] private GameObject coopsnakeBodyPrefab;
     private Rigidbody2D rb;
     [SerializeField] private int snakeSpeed = 7;
     public static CoopSnakeController Instance;
     internal List<Transform> snakeSegments = new List<Transform>();
-    //internal int score = 0;
+    internal int score = 0;
     bool canCheckCollision = false;
+    internal bool coopsnakeselfcollision = false;
     float delaycollisionchecktime = 3f;//at start we give snake a default length and want to avoid collision that time , as snake isnt moving the newly spawn body collide
     private void Awake()
     {
@@ -34,7 +35,9 @@ public class CoopSnakeController : MonoBehaviour
         HandleGridMovement();
         ScreenWrap();
         CheckSelfCollision();
-        //GetSpeedBoostStatus();
+        GetSpeedBoostStatus();
+        GameWonCheck();
+        CheckSnakeBite();
     }
 
     private void FixedUpdate()
@@ -139,12 +142,12 @@ public class CoopSnakeController : MonoBehaviour
         Vector3 lastSegmentPosition = snakeSegments[snakeSegments.Count - 1].position;
 
         // Create a new snake segment at the last segment's position
-        GameObject newSegment = Instantiate(snakeBodyPrefab, lastSegmentPosition, Quaternion.identity, transform.parent);
+        GameObject newSegment = Instantiate(coopsnakeBodyPrefab, lastSegmentPosition, Quaternion.identity, transform.parent);
         snakeSegments.Add(newSegment.transform); // Add the new segment to the list
-       /* if (GetScoreBoostStatus())
+       if (GetScoreBoostStatus())
         {
             score += 10;//Double the score for that duration
-        }*/
+        }
     }
 
     public void DestroyTail(int count)
@@ -190,8 +193,8 @@ public class CoopSnakeController : MonoBehaviour
 
         if (canCheckCollision == true)//needed so collision isnt detected at start of the game
         {
-           /* if (!GetShieldStatus())//if shield is not active
-            {*/
+            if (!GetShieldStatus())//if shield is not active
+            {
 
                 Vector3 headPosition = transform.position;
 
@@ -200,16 +203,16 @@ public class CoopSnakeController : MonoBehaviour
                 {
                     if (snakeSegments[i].position == headPosition)
                     {
-                        GameManager.Instance.OnGameOver();
+                        coopsnakeselfcollision = true;
                     }
                 }
             }
-            /*else
+            else
             {
 
                 return;
             }
-        }*/
+        }
         else
         {
             delaycollisionchecktime -= Time.deltaTime;
@@ -220,10 +223,10 @@ public class CoopSnakeController : MonoBehaviour
         }
     }
 
-   /* private bool GetShieldStatus()
+   private bool GetShieldStatus()
     {
 
-        if (ShieldPowerUp.Instance != null && ShieldPowerUp.Instance.iseaten)
+        if (ShieldPowerUp.Instance != null && ShieldPowerUp.Instance.coopiseaten)
         {
 
             return true;
@@ -232,11 +235,11 @@ public class CoopSnakeController : MonoBehaviour
         {
             return false;
         }
-    }*/
+    }
 
-    /*private bool GetScoreBoostStatus()
+    private bool GetScoreBoostStatus()
     {
-        if (ScoreBooster.Instance != null && ScoreBooster.Instance.iseaten)
+        if (ScoreBooster.Instance != null && ScoreBooster.Instance.coopiseaten)
         {
             return true;
         }
@@ -244,11 +247,11 @@ public class CoopSnakeController : MonoBehaviour
         {
             return false;
         }
-    }*/
+    }
 
-    /*private void GetSpeedBoostStatus()
+    private void GetSpeedBoostStatus()
     {
-        if (SpeedBoostScript.Instance != null && SpeedBoostScript.Instance.iseaten)
+        if (SpeedBoostScript.Instance != null && SpeedBoostScript.Instance.coopiseaten)
         {
             snakeSpeed = 10;
         }
@@ -256,5 +259,41 @@ public class CoopSnakeController : MonoBehaviour
         {
             snakeSpeed = 7;
         }
-    }*/
+    }
+    private void CheckSnakeBite()
+    {
+        /*Vector3 snake1headPosition = SnakeController.Instance.transform.position;
+       
+        for (int i = 0; i < snakeSegments.Count; i++) // Start from index 1 to exclude head
+        {
+            if (snakeSegments[i].position==snake1headPosition )//snake 1 head collided with snake 2 body
+            {
+                SnakeController.Instance.snakeselfcollision = true;
+                Debug.Log("Snake 2 won");
+            }
+        }*/
+        Vector3 snake2headPosition = snakeSegments[0].transform.position;
+        for (int i = 0; i < SnakeController.Instance.snakeSegments.Count; i++) // Start from index 1 to exclude head
+        {
+            
+            if (snake2headPosition == SnakeController.Instance.snakeSegments[i].transform.position)//snake 2 head collided with snake 1 body
+            {
+                coopsnakeselfcollision = true;
+                Debug.Log("Snake 1 won");
+            }
+        }
+    }
+    internal void GameWonCheck()
+    {
+        if (coopsnakeselfcollision == true)
+        {
+            CoOpGameManager.Instance.WinText.text = ("Snake 1 Won");
+            CoOpGameManager.Instance.OnGameOver();
+        }
+        if (SnakeController.Instance.snakeselfcollision == true)
+        {
+            CoOpGameManager.Instance.WinText.text = ("Snake 2 Won");
+            CoOpGameManager.Instance.OnGameOver();
+        }
+    }
 }

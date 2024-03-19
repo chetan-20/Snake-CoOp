@@ -13,6 +13,7 @@ public class SnakeController : MonoBehaviour
     internal List<Transform> snakeSegments = new List<Transform>();
     internal int score = 0;
     bool canCheckCollision = false;
+    internal bool snakeselfcollision = false;
     float delaycollisionchecktime = 3f;//at start we give snake a default length and want to avoid collision that time , as snake isnt moving the newly spawn body collide
     private void Awake()
     {
@@ -201,7 +202,11 @@ public class SnakeController : MonoBehaviour
                 {
                     if (snakeSegments[i].position == headPosition)
                     {
-                        GameManager.Instance.OnGameOver();
+                        if (GameManager.Instance != null)
+                        {
+                            GameManager.Instance.OnGameOver();
+                        }
+                        snakeselfcollision = true;
                     }
                 }
             }

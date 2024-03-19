@@ -48,20 +48,41 @@ public class SpawnFood : MonoBehaviour
    
     public void SpawnBadApple()
     {
-        if (currentbadapple == null && SnakeController.Instance.snakeSegments.Count>5)//if snake got more than 5 parts then only run
+        if (CoopSnakeController.Instance == null)//Single Player Active
         {
-            float minX = 1f;
-            float minY = 1f;
-            float maxX = 19f;
-            float maxY = 19f;
+            if (currentbadapple == null && SnakeController.Instance.snakeSegments.Count > 5)//if snake got more than 5 parts then only run
+            {
+                float minX = 1f;
+                float minY = 1f;
+                float maxX = 19f;
+                float maxY = 19f;
 
-            float randomX = Random.Range(minX, maxX);
-            float randomY = Random.Range(minY, maxY);
+                float randomX = Random.Range(minX, maxX);
+                float randomY = Random.Range(minY, maxY);
 
-            Vector2 spawnposition = new Vector2(randomX, randomY);
+                Vector2 spawnposition = new Vector2(randomX, randomY);
 
-            currentbadapple = Instantiate(BadApplePrefab, spawnposition, Quaternion.identity);
-            Destroy(currentbadapple, foodlifetime);
+                currentbadapple = Instantiate(BadApplePrefab, spawnposition, Quaternion.identity);
+                Destroy(currentbadapple, foodlifetime);
+            }
+        }
+        else//CoOp Active
+        {
+            if (currentbadapple == null )
+            {
+                float minX = 1f;
+                float minY = 1f;
+                float maxX = 19f;
+                float maxY = 19f;
+
+                float randomX = Random.Range(minX, maxX);
+                float randomY = Random.Range(minY, maxY);
+
+                Vector2 spawnposition = new Vector2(randomX, randomY);
+
+                currentbadapple = Instantiate(BadApplePrefab, spawnposition, Quaternion.identity);
+                Destroy(currentbadapple, foodlifetime);
+            }
         }
     }
 

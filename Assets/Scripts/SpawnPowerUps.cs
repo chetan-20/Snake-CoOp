@@ -8,7 +8,7 @@ public class SpawnPowerUps : MonoBehaviour
     [SerializeField] private GameObject ShieldPowerUpPrefab;
     [SerializeField] private GameObject ScoreBoostPrefab;
     [SerializeField] private GameObject SpeedBoostPowerUp;
-    
+    [SerializeField] internal TextMeshProUGUI CoopPowerUpPanel=null;
     [SerializeField] internal TextMeshProUGUI PowerUpPanel;
     [SerializeField] private float minSpawntime = 5f;
     [SerializeField] private float maxSpawntime = 10f;
@@ -48,6 +48,7 @@ public class SpawnPowerUps : MonoBehaviour
             if (SpeedBoostScript.Instance.iseffectover == true)
             {
                 PowerUpPanel.text = "";
+                CoopPowerUpPanel.text = "";
                 Destroy(currentpowerup); 
                 
             }
@@ -58,6 +59,7 @@ public class SpawnPowerUps : MonoBehaviour
             if (ScoreBooster.Instance.iseffectover == true)
             {
                 PowerUpPanel.text = "";
+                CoopPowerUpPanel.text = "";
                 Destroy(currentpowerup);
             }
             
@@ -67,6 +69,7 @@ public class SpawnPowerUps : MonoBehaviour
             if (ShieldPowerUp.Instance.iseffectover == true)
             {
                 PowerUpPanel.text = "";
+                CoopPowerUpPanel.text = "";
                 Destroy(currentpowerup);
             }
             
@@ -108,6 +111,7 @@ public class SpawnPowerUps : MonoBehaviour
             }
             Destroy(currentpowerup,poweruplifetime);
             PowerUpPanel.text = "";
+            CoopPowerUpPanel.text = "";
         }
     }
 }

@@ -19,5 +19,19 @@ public class BadAppleController : MonoBehaviour
                 SnakeController.Instance.score = 0;
             }
         }
+        if (collision.gameObject.GetComponent<CoopSnakeController>() != null)
+        {
+            SoundController.Instance.PlaySound(Sounds.BadAppleEatingSound);
+            SpawnFood.Instance.SpawnBadApple();
+            Destroy(gameObject);
+            CoopSnakeController.Instance.DestroyTail(3);
+            CoopSnakeController.Instance.score -= 30;//decrease by 30
+            if (CoopSnakeController.Instance.score < 0)
+            {
+                CoopSnakeController.Instance.score = 0;
+            }
+        }
     }
+
+   
 }

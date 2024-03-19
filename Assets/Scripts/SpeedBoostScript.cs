@@ -7,6 +7,7 @@ public class SpeedBoostScript : MonoBehaviour
     private float powerupduration = 10f;
     internal bool iseaten = false;//will be used in other class to set up the effects
     internal bool iseffectover = false;
+    internal bool coopiseaten = false;
     private void Awake()
     {
         Instance = this;
@@ -18,6 +19,11 @@ public class SpeedBoostScript : MonoBehaviour
         {
             ApplyEffect();          
             Invoke("RemoveEffect", powerupduration);           
+        }
+        if (collision.gameObject.CompareTag("CoopSnake"))
+        {
+            CoopApplyEffect();
+            Invoke("RemoveEffect", powerupduration);
         }
     }
    
@@ -31,11 +37,20 @@ public class SpeedBoostScript : MonoBehaviour
         gameObject.GetComponent<Renderer>().enabled = false;
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
     }
-    
-    private void RemoveEffect()
+    private void CoopApplyEffect()
     {
-       
-               
+
+
+        SoundController.Instance.PlaySound(Sounds.PowerUpSound);
+        SpawnPowerUps.Instance.CoopPowerUpPanel.text = "Speed Boost!";
+        coopiseaten = true;
+        gameObject.GetComponent<Renderer>().enabled = false;
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+
+    }
+
+    private void RemoveEffect()
+    {                      
         iseffectover = true;       
     }
    

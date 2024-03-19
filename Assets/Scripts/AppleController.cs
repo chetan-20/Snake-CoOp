@@ -16,6 +16,15 @@ public class AppleController : MonoBehaviour
             SnakeController.Instance.score += 10;//since score should increase only after eating food
             
         }
+        if (collision.gameObject.GetComponent<CoopSnakeController>() != null)
+        {
+            SoundController.Instance.PlaySound(Sounds.AppleEatingSound);
+            SpawnFood.Instance.SpawnApple();
+            Destroy(gameObject);
+            CoopSnakeController.Instance.GrowSnake();
+            CoopSnakeController.Instance.score += 10;//since score should increase only after eating food
+
+        }
     }
 
    
