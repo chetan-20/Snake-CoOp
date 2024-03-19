@@ -38,11 +38,13 @@ public class CoopSnakeController : MonoBehaviour
         GetSpeedBoostStatus();
         GameWonCheck();
         CheckSnakeBite();
+      
     }
 
     private void FixedUpdate()
     {
         MoveSnakeBody();
+       
     }
 
     private void HandleInput()
@@ -263,25 +265,46 @@ public class CoopSnakeController : MonoBehaviour
     private void CheckSnakeBite()
     {
         /*Vector3 snake1headPosition = SnakeController.Instance.transform.position;
-       
-        for (int i = 0; i < snakeSegments.Count; i++) // Start from index 1 to exclude head
+
+          for (int i = 0; i < this.snakeSegments.Count; i++) 
         {
-            if (snakeSegments[i].position==snake1headPosition )//snake 1 head collided with snake 2 body
+            if (this.snakeSegments[i].transform.position==snake1headPosition )//snake 1 head collided with snake 2 body
             {
                 SnakeController.Instance.snakeselfcollision = true;
                 Debug.Log("Snake 2 won");
             }
-        }*/
-        Vector3 snake2headPosition = snakeSegments[0].transform.position;
-        for (int i = 0; i < SnakeController.Instance.snakeSegments.Count; i++) // Start from index 1 to exclude head
+        }
+        Vector3 snake2headPosition = this.transform.position;
+        for (int i = 0; i < SnakeController.Instance.snakeSegments.Count; i++) 
         {
-            
+
             if (snake2headPosition == SnakeController.Instance.snakeSegments[i].transform.position)//snake 2 head collided with snake 1 body
             {
                 coopsnakeselfcollision = true;
                 Debug.Log("Snake 1 won");
             }
+        }*/
+        Vector3 snake1headPosition = SnakeController.Instance.transform.position;
+
+        for (int i = 1; i < snakeSegments.Count; i++)
+        {
+            if (Vector3.Distance(snakeSegments[i].transform.position, snake1headPosition) < 0.8f)
+            {
+                SnakeController.Instance.snakeselfcollision = true;
+                Debug.Log("Snake 2 won");
+            }
         }
+        Vector3 snake2headPosition = snakeSegments[0].transform.position;
+        for (int i = 1; i < SnakeController.Instance.snakeSegments.Count; i++)
+        {
+            if (Vector3.Distance(snake2headPosition, SnakeController.Instance.snakeSegments[i].transform.position) < 0.8f)
+            {
+                coopsnakeselfcollision = true;
+                Debug.Log("Snake 1 won");
+            }
+        }
+
+
     }
     internal void GameWonCheck()
     {

@@ -2707,7 +2707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8e95fe692f1a44a885e28a4a5db8f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coopsnakeBodyPrefab: {fileID: 4104913671356709475, guid: 9d2554c920e36624f97af6cca13ef126, type: 3}
+  coopsnakeBodyPrefab: {fileID: 3438392576950572236, guid: 9d2554c920e36624f97af6cca13ef126, type: 3}
   snakeSpeed: 7
 --- !u!1 &1691110970
 GameObject:
