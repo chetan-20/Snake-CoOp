@@ -11,7 +11,7 @@ public class SpawnPowerUps : MonoBehaviour
     [SerializeField] private float minSpawntime = 5f;
     [SerializeField] private float maxSpawntime = 10f;
     [SerializeField] internal float poweruplifetime = 25f; 
-    [SerializeField] internal TextMeshProUGUI CoopPowerUpPanel=null;
+    [SerializeField] internal TextMeshProUGUI CoopPowerUpPanel;
     [SerializeField] internal TextMeshProUGUI PowerUpPanel;
     private GameObject currentpowerup;
     public static SpawnPowerUps Instance;   
@@ -23,7 +23,7 @@ public class SpawnPowerUps : MonoBehaviour
     }
     private void Start()
     {
-        InvokeRepeating(nameof(SpawnPowerUp), minSpawntime*2, Random.Range(minSpawntime, maxSpawntime));
+        InvokeRepeating(nameof(SpawnPowerUp), minSpawntime*2f, Random.Range(minSpawntime, maxSpawntime));
     }
     private void Update()
     {

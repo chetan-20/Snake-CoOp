@@ -18,8 +18,7 @@ public class SnakeController : MonoBehaviour
     private void Awake()
     {
         Instance= this;            
-        gridmovedirection = new Vector2Int(1,0);
-        RotateSprite(0f);
+        gridmovedirection = new Vector2Int(1,0);       
         rb = GetComponent<Rigidbody2D>();
         snakeSegments.Add(transform);//Adding the head;
         DefaultSnakeLength(4);
@@ -49,7 +48,7 @@ public class SnakeController : MonoBehaviour
             {
                 gridmovedirection.y = 1;
                 gridmovedirection.x = 0;
-                RotateSprite(90f);
+                RotateSprite(0f);
             }
         }
         if (Input.GetKey(KeyCode.S))
@@ -58,7 +57,7 @@ public class SnakeController : MonoBehaviour
             {
                 gridmovedirection.y = -1;
                 gridmovedirection.x = 0;
-                RotateSprite(-90f);
+                RotateSprite(180f);
             }
         }
         if (Input.GetKey(KeyCode.D))
@@ -67,7 +66,7 @@ public class SnakeController : MonoBehaviour
             {
                 gridmovedirection.y = 0;
                 gridmovedirection.x = +1;
-                RotateSprite(0f);
+                RotateSprite(-90f);
             }
         }
         if (Input.GetKey(KeyCode.A))
@@ -76,7 +75,7 @@ public class SnakeController : MonoBehaviour
             {
                 gridmovedirection.y = 0;
                 gridmovedirection.x = -1;
-                RotateSprite(-180f);
+                RotateSprite(90f);
             }
         }
     }
@@ -89,7 +88,7 @@ public class SnakeController : MonoBehaviour
 
     private void RotateSprite(float angle)
     {
-        transform.rotation = Quaternion.Euler(0f, 0f, angle-90f);
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     private void ScreenWrap()

@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreUI;
     [SerializeField] private TextMeshProUGUI FinalScore;
     [SerializeField] private TextMeshProUGUI snakescoreUI;
-    [SerializeField] private TextMeshProUGUI coopsnakescoreUI;
+    [SerializeField] private TextMeshProUGUI coopsnakescoreUI;  
     [SerializeField] private GameObject LevelObject;
     [SerializeField] private GameObject PausePanel;
     [SerializeField] private GameObject CoOpParent;
@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject CoOpGameOverPanel;
     [SerializeField] private GameObject PowerUpUIObject;
     [SerializeField] private GameObject CoOpPowerUpUIObject;
+    [SerializeField] internal TextMeshProUGUI coopwintext;
     public static GameManager Instance;
 
     private void Awake()
@@ -29,80 +30,37 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1.0f;
-        if(CoopSnakeController.Instance == null)
-        {
-            SingleParent.SetActive(true);
-        }
-        else
-        {
-           CoOpParent.SetActive(true);
-            SingleParent.SetActive(false);
-        }
+        ActivateCoOPUI();
+       
     }
     private void Update()
     {
         UpdateScoreUI();
         OnEscapePressed();
-        UpDateCoopSnakeScoreUI();
     }
-   
-    
+    private void ActivateCoOPUI()
+    {
+        if(CoopSnakeController.Instance != null)
+        { 
+            CoOpParent.SetActive(true);           
+        }
+        else
+        {
+            CoOpParent.SetActive(false);
+        }
+    }
     private void UpdateScoreUI()
     {
         if (SnakeController.Instance != null)
         {
             scoreUI.text = "Score : " + SnakeController.Instance.score;
         }
-    }
-    private void UpDateCoopSnakeScoreUI()
-    {
-        if (SnakeController.Instance != null && CoopSnakeController.Instance != null)
+        else if (SnakeController.Instance != null && CoopSnakeController.Instance != null)
         {        
             snakescoreUI.text = "P1 Score : " + SnakeController.Instance.score;
             coopsnakescoreUI.text = "P2 Score : " + CoopSnakeController.Instance.score;
         }
-    } 
-    
-    
-    public void PauseGame()
-    {
-        
-        Time.timeScale = 0f;
-        PausePanel.SetActive(true);
-        LevelObject.SetActive(false);
-        ScoreUIObject.SetActive(false);
-        PowerUpUIObject.SetActive(false);
-        CoOPScoreUIObject.SetActive(false);
     }
-
-    public void ResumeGame() 
-    {
-        SoundController.Instance.PlaySound(Sounds.ButtonClickSound);
-        Time.timeScale = 1f;
-        PausePanel.SetActive(false);
-        LevelObject.SetActive(true);
-        ScoreUIObject.SetActive(true);
-        PowerUpUIObject.SetActive(true);
-        if (CoopSnakeController.Instance != null)
-        {
-            CoOPScoreUIObject.SetActive(true);
-        }
-    }
-
-    public void LoadMenu()
-    {
-        SoundController.Instance.PlaySound(Sounds.ButtonClickSound);
-        SceneManager.LoadScene(0);
-    }
-
-    private void OnEscapePressed()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            PauseGame();
-        }
-    }
-
     public void OnGameOver()
     {
         if (CoopSnakeController.Instance == null)
@@ -124,11 +82,44 @@ public class GameManager : MonoBehaviour
             CoOpGameOverPanel.SetActive(true);
         }
     }
-
+    public void PauseGame()
+    {
+        
+        Time.timeScale = 0f;
+        PausePanel.SetActive(true);
+        LevelObject.SetActive(false);
+        ScoreUIObject.SetActive(false);
+        PowerUpUIObject.SetActive(false);
+        CoOPScoreUIObject.SetActive(false);
+    }
+    public void ResumeGame() 
+    {
+        SoundController.Instance.PlaySound(Sounds.ButtonClickSound);
+        Time.timeScale = 1f;
+        PausePanel.SetActive(false);
+        LevelObject.SetActive(true);
+        ScoreUIObject.SetActive(true);
+        PowerUpUIObject.SetActive(true);
+        if (CoopSnakeController.Instance != null)
+        {
+            CoOPScoreUIObject.SetActive(true);
+        }
+    }
+    private void OnEscapePressed()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
+    } 
+    public void LoadMenu()
+    {
+        SoundController.Instance.PlaySound(Sounds.ButtonClickSound);
+        SceneManager.LoadScene(0);
+    } 
     public void RestartGame()
     {
         SoundController.Instance.PlaySound(Sounds.ButtonClickSound);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
     }
 }

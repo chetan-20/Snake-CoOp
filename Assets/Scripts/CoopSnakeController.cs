@@ -276,13 +276,13 @@ public class CoopSnakeController : MonoBehaviour
     {
         if (coopsnakeselfcollision == true)
         {
-            CoOpGameManager.Instance.WinText.text = ("Snake 1 Won");
-            CoOpGameManager.Instance.OnGameOver();
+            GameManager.Instance.coopwintext.text = ("Snake 1 Won");
+            GameManager.Instance.OnGameOver();
         }
         if (SnakeController.Instance.snakeselfcollision == true)
         {
-            CoOpGameManager.Instance.WinText.text = ("Snake 2 Won");
-            CoOpGameManager.Instance.OnGameOver();
+            GameManager.Instance.coopwintext.text = ("Snake 2 Won");
+            GameManager.Instance.OnGameOver();
         }
     }
 }
