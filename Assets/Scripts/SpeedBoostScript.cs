@@ -1,59 +1,27 @@
 
 using UnityEngine;
 
-public class SpeedBoostScript : MonoBehaviour
+public class SpeedBoostScript : BasePowerUP
 {
     public static SpeedBoostScript Instance;
-    private float powerupduration = 10f;
-    internal bool iseaten = false;//will be used in other class to set up the effects
-    internal bool iseffectover = false;
-    internal bool coopiseaten = false;
     private void Awake()
     {
         Instance = this;
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<SnakeController>() != null)
+        poweruptext = "Speed Boost";
+        SnakeController snakeController = collision.gameObject.GetComponent<SnakeController>();
+        CoopSnakeController coopSnakeController = collision.gameObject.GetComponent<CoopSnakeController>();
+        if (snakeController != null)
         {
-            ApplyEffect();          
-            Invoke("RemoveEffect", powerupduration);           
+            ApplyEffect(poweruptext);
+            Invoke(nameof(RemoveEffect), powerupduration);
         }
-        if (collision.gameObject.CompareTag("CoopSnake"))
+        else if (coopSnakeController != null)
         {
-            CoopApplyEffect();
-            Invoke("RemoveEffect", powerupduration);
+            CoopApplyEffect(poweruptext);
+            Invoke(nameof(RemoveEffect), powerupduration);
         }
     }
-   
-    private void ApplyEffect()
-    {
-        
-       
-        SoundController.Instance.PlaySound(Sounds.PowerUpSound);
-        iseaten = true;
-        SpawnPowerUps.Instance.PowerUpPanel.text = "Speed Boost!";
-        gameObject.GetComponent<Renderer>().enabled = false;
-        gameObject.GetComponent<BoxCollider2D>().enabled = false;
-    }
-    private void CoopApplyEffect()
-    {
-
-
-        SoundController.Instance.PlaySound(Sounds.PowerUpSound);
-        SpawnPowerUps.Instance.CoopPowerUpPanel.text = "Speed Boost!";
-        coopiseaten = true;
-        gameObject.GetComponent<Renderer>().enabled = false;
-        gameObject.GetComponent<BoxCollider2D>().enabled = false;
-
-    }
-
-    private void RemoveEffect()
-    {                      
-        iseffectover = true;       
-    }
-   
-    
-   
 }

@@ -36,7 +36,7 @@ public class SnakeController : MonoBehaviour
         HandleGridMovement();
         ScreenWrap();
         CheckSelfCollision();
-        GetSpeedBoostStatus();
+        SetSpeedBoost();
     }
 
     private void FixedUpdate()
@@ -228,33 +228,17 @@ public class SnakeController : MonoBehaviour
 
     private bool GetShieldStatus()
     {
-       
-        if(ShieldPowerUp.Instance != null && ShieldPowerUp.Instance.iseaten)
-        {
-            
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return ShieldPowerUp.Instance != null && ShieldPowerUp.Instance.Getiseaten();       
     }
 
     private bool GetScoreBoostStatus()
     {
-        if (ScoreBooster.Instance != null && ScoreBooster.Instance.iseaten)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return ScoreBooster.Instance != null && ScoreBooster.Instance.Getiseaten();
     }
 
-    private void GetSpeedBoostStatus()
+    private void SetSpeedBoost()
     {
-        if (SpeedBoostScript.Instance != null && SpeedBoostScript.Instance.iseaten)
+        if (SpeedBoostScript.Instance != null && SpeedBoostScript.Instance.Getiseaten())
         {
             snakeSpeed = 10;
         }

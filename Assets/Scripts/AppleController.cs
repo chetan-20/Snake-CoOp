@@ -5,6 +5,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class AppleController : MonoBehaviour
 {
+    [SerializeField] private int points = 10;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<SnakeController>()!=null)
@@ -13,8 +14,7 @@ public class AppleController : MonoBehaviour
             SpawnFood.Instance.SpawnApple();
             Destroy(gameObject);
             SnakeController.Instance.GrowSnake();
-            SnakeController.Instance.score += 10;//since score should increase only after eating food
-            
+            SnakeController.Instance.score += points;            
         }
         if (collision.gameObject.GetComponent<CoopSnakeController>() != null)
         {
@@ -22,10 +22,7 @@ public class AppleController : MonoBehaviour
             SpawnFood.Instance.SpawnApple();
             Destroy(gameObject);
             CoopSnakeController.Instance.GrowSnake();
-            CoopSnakeController.Instance.score += 10;//since score should increase only after eating food
-
+            CoopSnakeController.Instance.score += points;
         }
-    }
-
-   
+    }  
 }

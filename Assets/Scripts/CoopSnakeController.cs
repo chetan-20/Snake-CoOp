@@ -228,32 +228,17 @@ public class CoopSnakeController : MonoBehaviour
    private bool GetShieldStatus()
     {
 
-        if (ShieldPowerUp.Instance != null && ShieldPowerUp.Instance.coopiseaten)
-        {
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return ShieldPowerUp.Instance != null && ShieldPowerUp.Instance.Getcoopiseaten();
     }
 
     private bool GetScoreBoostStatus()
     {
-        if (ScoreBooster.Instance != null && ScoreBooster.Instance.coopiseaten)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return ScoreBooster.Instance != null && ScoreBooster.Instance.Getcoopiseaten();
     }
 
     private void GetSpeedBoostStatus()
     {
-        if (SpeedBoostScript.Instance != null && SpeedBoostScript.Instance.coopiseaten)
+        if (SpeedBoostScript.Instance != null && SpeedBoostScript.Instance.Getcoopiseaten())
         {
             snakeSpeed = 10;
         }
@@ -264,26 +249,7 @@ public class CoopSnakeController : MonoBehaviour
     }
     private void CheckSnakeBite()
     {
-        /*Vector3 snake1headPosition = SnakeController.Instance.transform.position;
-
-          for (int i = 0; i < this.snakeSegments.Count; i++) 
-        {
-            if (this.snakeSegments[i].transform.position==snake1headPosition )//snake 1 head collided with snake 2 body
-            {
-                SnakeController.Instance.snakeselfcollision = true;
-                Debug.Log("Snake 2 won");
-            }
-        }
-        Vector3 snake2headPosition = this.transform.position;
-        for (int i = 0; i < SnakeController.Instance.snakeSegments.Count; i++) 
-        {
-
-            if (snake2headPosition == SnakeController.Instance.snakeSegments[i].transform.position)//snake 2 head collided with snake 1 body
-            {
-                coopsnakeselfcollision = true;
-                Debug.Log("Snake 1 won");
-            }
-        }*/
+        
         Vector3 snake1headPosition = SnakeController.Instance.transform.position;
 
         for (int i = 1; i < snakeSegments.Count; i++)

@@ -792,11 +792,11 @@ MonoBehaviour:
   ShieldPowerUpPrefab: {fileID: 6232173886062426155, guid: 77a388fd1c91fe741bc9af38a7ed09b0, type: 3}
   ScoreBoostPrefab: {fileID: 922539755066811764, guid: b55f12e8c6e8796468cf0a87555c1924, type: 3}
   SpeedBoostPowerUp: {fileID: 4555119731097969997, guid: 92fe83202d9a2e942a8b6eec4f4dfcf6, type: 3}
-  CoopPowerUpPanel: {fileID: 1348176046}
-  PowerUpPanel: {fileID: 158119034}
   minSpawntime: 1
   maxSpawntime: 5
   poweruplifetime: 25
+  CoopPowerUpPanel: {fileID: 1348176046}
+  PowerUpPanel: {fileID: 158119034}
 --- !u!1 &281751112
 GameObject:
   m_ObjectHideFlags: 0
@@ -1505,6 +1505,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 794391259}
+  - component: {fileID: 794391260}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -1533,6 +1534,18 @@ Transform:
   - {fileID: 241642123}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &794391260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794391258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a3f4d8a96317dc4fb171628af40c61c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &803707543
 GameObject:
   m_ObjectHideFlags: 0
