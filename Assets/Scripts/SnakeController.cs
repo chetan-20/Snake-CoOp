@@ -25,10 +25,7 @@ public class SnakeController : MonoBehaviour
         DefaultSnakeLength(4);
     }
 
-    private void Start()
-    {
-        Time.timeScale = 1.0f;
-    }
+   
 
     private void Update()
     {

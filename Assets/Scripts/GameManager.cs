@@ -7,38 +7,72 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreUI;
+    [SerializeField] private TextMeshProUGUI FinalScore;
+    [SerializeField] private TextMeshProUGUI snakescoreUI;
+    [SerializeField] private TextMeshProUGUI coopsnakescoreUI;
     [SerializeField] private GameObject LevelObject;
     [SerializeField] private GameObject PausePanel;
-    [SerializeField] private GameObject ScoreUI;
+    [SerializeField] private GameObject CoOpParent;
+    [SerializeField] private GameObject SingleParent;
+    [SerializeField] private GameObject ScoreUIObject;
+    [SerializeField] private GameObject CoOPScoreUIObject;
     [SerializeField] private GameObject GameOverPanel;
-    [SerializeField] private TextMeshProUGUI FinalScore;
-    [SerializeField] private GameObject PowerUpUI;
+    [SerializeField] private GameObject CoOpGameOverPanel;
+    [SerializeField] private GameObject PowerUpUIObject;
+    [SerializeField] private GameObject CoOpPowerUpUIObject;
     public static GameManager Instance;
 
     private void Awake()
     {
         Instance = this;
     }
+    private void Start()
+    {
+        Time.timeScale = 1.0f;
+        if(CoopSnakeController.Instance == null)
+        {
+            SingleParent.SetActive(true);
+        }
+        else
+        {
+           CoOpParent.SetActive(true);
+            SingleParent.SetActive(false);
+        }
+    }
     private void Update()
     {
         UpdateScoreUI();
         OnEscapePressed();
+        UpDateCoopSnakeScoreUI();
     }
    
     
     private void UpdateScoreUI()
     {
-        scoreUI.text="Score : " + SnakeController.Instance.score;
+        if (SnakeController.Instance != null)
+        {
+            scoreUI.text = "Score : " + SnakeController.Instance.score;
+        }
     }
-
+    private void UpDateCoopSnakeScoreUI()
+    {
+        if (SnakeController.Instance != null && CoopSnakeController.Instance != null)
+        {        
+            snakescoreUI.text = "P1 Score : " + SnakeController.Instance.score;
+            coopsnakescoreUI.text = "P2 Score : " + CoopSnakeController.Instance.score;
+        }
+    } 
+    
+    
     public void PauseGame()
     {
         
         Time.timeScale = 0f;
         PausePanel.SetActive(true);
         LevelObject.SetActive(false);
-        ScoreUI.SetActive(false);
-        PowerUpUI.SetActive(false);
+        ScoreUIObject.SetActive(false);
+        PowerUpUIObject.SetActive(false);
+        CoOPScoreUIObject.SetActive(false);
     }
 
     public void ResumeGame() 
@@ -47,8 +81,12 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         PausePanel.SetActive(false);
         LevelObject.SetActive(true);
-        ScoreUI.SetActive(true);
-        PowerUpUI.SetActive(true);
+        ScoreUIObject.SetActive(true);
+        PowerUpUIObject.SetActive(true);
+        if (CoopSnakeController.Instance != null)
+        {
+            CoOPScoreUIObject.SetActive(true);
+        }
     }
 
     public void LoadMenu()
@@ -67,13 +105,24 @@ public class GameManager : MonoBehaviour
 
     public void OnGameOver()
     {
-        SoundController.Instance.PlaySound(Sounds.GameOverSound);
-        Time.timeScale = 0f;
-        LevelObject.SetActive(false);
-        ScoreUI.SetActive(false);
-        GameOverPanel.SetActive(true);
-        PowerUpUI.SetActive(false);
-        FinalScore.text = "Final Score : " + SnakeController.Instance.score;
+        if (CoopSnakeController.Instance == null)
+        {
+            Time.timeScale = 0f;
+            LevelObject.SetActive(false);
+            ScoreUIObject.SetActive(false);
+            GameOverPanel.SetActive(true);
+            PowerUpUIObject.SetActive(false);
+            FinalScore.text = "Final Score : " + SnakeController.Instance.score;
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            SoundController.Instance.PlaySound(Sounds.GameOverSound);
+            Time.timeScale = 0f;
+            LevelObject.SetActive(false);
+            CoOPScoreUIObject.SetActive(false);
+            CoOpGameOverPanel.SetActive(true);
+        }
     }
 
     public void RestartGame()
