@@ -9,6 +9,10 @@ public class GridArea : MonoBehaviour
     internal float minY = 1f;
     internal float maxX = 19f;
     internal float maxY = 19f;
+    internal float rightBound = 19.5f;
+    internal float leftBound = 0.5f;
+    internal float upperBound = 19.5f;
+    internal float lowerBound = 0.5f;
 
     private void Awake()
     {
