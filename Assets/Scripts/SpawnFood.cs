@@ -20,7 +20,7 @@ public class SpawnFood : MonoBehaviour
     private void Start()
     {
         InvokeRepeating(nameof(SpawnApple), Random.Range(minSpawntime, maxSpawntime), Random.Range(minSpawntime, maxSpawntime));
-        InvokeRepeating(nameof(SpawnBadApple), Random.Range(minSpawntime, maxSpawntime)*1.5f, Random.Range(minSpawntime, maxSpawntime)*1.5f);//multiplied by 1.5 to slow down spawning of bad apple       
+        InvokeRepeating(nameof(SpawnBadApple), Random.Range(minSpawntime, maxSpawntime)*1.5f, Random.Range(minSpawntime, maxSpawntime)*1.5f);       
     }
     
     public void SpawnApple()
@@ -38,7 +38,7 @@ public class SpawnFood : MonoBehaviour
     {
         if (CoopSnakeController.Instance == null)//Single Player Active
         {
-            if (currentbadapple == null && SnakeController.Instance.snakeSegments.Count > 5)//if snake got more than 5 parts then only run
+            if (currentbadapple == null && SnakeController.Instance.snakeSegments.Count > 5)
             {
                 Vector2 spawnposition = GridArea.Instance.GetRandomPosition();
                 currentbadapple = Instantiate(BadApplePrefab, spawnposition, Quaternion.identity);
@@ -47,7 +47,7 @@ public class SpawnFood : MonoBehaviour
         }
         else
         {
-            if (currentbadapple == null )
+            if (currentbadapple == null && SnakeController.Instance.snakeSegments.Count >3 && CoopSnakeController.Instance.snakeSegments.Count > 3)
             {
                 Vector2 spawnposition = GridArea.Instance.GetRandomPosition();
                 currentbadapple = Instantiate(BadApplePrefab, spawnposition, Quaternion.identity);

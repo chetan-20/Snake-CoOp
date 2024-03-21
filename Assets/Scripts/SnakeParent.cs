@@ -4,13 +4,13 @@ using UnityEngine;
 
 public abstract class SnakeParent : MonoBehaviour
 {    
+    internal bool selfcollision = false;
     [SerializeField] protected GameObject snakeBodyPrefab;
     [SerializeField] protected int snakeSpeed = 7;
     protected Rigidbody2D rb;
-    protected Vector2Int gridMoveDirection;   
-    protected bool canCheckCollision = false;
-    protected bool selfCollision = false;
-    protected float delayCollisionCheckTime = 3f; 
+    protected Vector2Int gridmovedirection;   
+    protected bool canCheckCollision = false;    
+    protected float delaycollisionchecktime = 3f; 
     internal List<Transform> snakeSegments = new List<Transform>();
     internal int score = 0;
     protected int scoreboost = 10;
@@ -20,13 +20,17 @@ public abstract class SnakeParent : MonoBehaviour
         snakeSegments.Add(transform); // Adding the head
         DefaultSnakeLength(4);
     }
+    private void Start()
+    {
+        Time.timeScale = 1.0f;
+    }
     protected virtual void Update()
     {
         HandleInput();
         HandleGridMovement();
-        ScreenWrap();
-        CheckSelfCollision();
         SetSpeedBoost();
+        ScreenWrap();
+        CheckSelfCollision();   
     }
     protected virtual void FixedUpdate()
     {
@@ -35,10 +39,9 @@ public abstract class SnakeParent : MonoBehaviour
 
     protected virtual void HandleGridMovement()
     {
-        Vector2 movement = gridMoveDirection * snakeSpeed;
+        Vector2 movement = gridmovedirection * snakeSpeed;
         rb.velocity = movement;
     }
-
     protected virtual void ScreenWrap()
     {
         Vector3 currentPosition = transform.position;            
@@ -69,7 +72,7 @@ public abstract class SnakeParent : MonoBehaviour
         }
     }
 
-    public void GrowSnake()
+    public virtual void GrowSnake()
     {
         Vector3 lastSegmentPosition = snakeSegments[snakeSegments.Count - 1].position;
         GameObject newSegment = Instantiate(snakeBodyPrefab, lastSegmentPosition, Quaternion.identity, transform.parent);
@@ -102,16 +105,22 @@ public abstract class SnakeParent : MonoBehaviour
         }
     }
 
-    protected abstract void DefaultSnakeLength(int bodyLength);
+    public void RotateSprite(float angle)
+    {
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
+    }
 
-    protected abstract void CheckSelfCollision();
+    protected void DefaultSnakeLength(int bodyLength)
+    {
+        for (int i = 0; i < bodyLength; i++)
+        {
+            GrowSnake();
+        }
+    }
 
-    protected abstract bool GetShieldStatus();
-
-    protected abstract bool GetScoreBoostStatus();
-
-    protected abstract void SetSpeedBoost();
+    protected abstract void CheckSelfCollision();   
     protected abstract void HandleInput();
-
-    
+    protected abstract bool GetShieldStatus();
+    protected abstract bool GetScoreBoostStatus();
+    protected abstract void SetSpeedBoost();
 }

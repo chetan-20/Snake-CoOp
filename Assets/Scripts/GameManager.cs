@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreUI;
     [SerializeField] private TextMeshProUGUI FinalScore;
     [SerializeField] private TextMeshProUGUI snakescoreUI;
-    [SerializeField] private TextMeshProUGUI coopsnakescoreUI;  
+    [SerializeField] private TextMeshProUGUI coopsnakescoreUI;
     [SerializeField] private GameObject LevelObject;
     [SerializeField] private GameObject PausePanel;
     [SerializeField] private GameObject CoOpParent;
@@ -31,18 +31,19 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         ActivateCoOPUI();
-       
     }
     private void Update()
     {
         UpdateScoreUI();
         OnEscapePressed();
+        GameWonCheck();
+        CheckSnakeBite();
     }
     private void ActivateCoOPUI()
     {
-        if(CoopSnakeController.Instance != null)
-        { 
-            CoOpParent.SetActive(true);           
+        if (CoopSnakeController.Instance != null)
+        {
+            CoOpParent.SetActive(true);
         }
         else
         {
@@ -51,21 +52,23 @@ public class GameManager : MonoBehaviour
     }
     private void UpdateScoreUI()
     {
-        if (SnakeController.Instance != null)
+       
+        if (SnakeController.Instance != null && CoopSnakeController.Instance != null)
         {
-            scoreUI.text = "Score : " + SnakeController.Instance.score;
-        }
-        else if (SnakeController.Instance != null && CoopSnakeController.Instance != null)
-        {        
             snakescoreUI.text = "P1 Score : " + SnakeController.Instance.score;
             coopsnakescoreUI.text = "P2 Score : " + CoopSnakeController.Instance.score;
+        }
+        else if (SnakeController.Instance != null)
+        {
+            scoreUI.text = "Score : " + SnakeController.Instance.score;
         }
     }
     public void OnGameOver()
     {
         if (CoopSnakeController.Instance == null)
-        {
-            Time.timeScale = 0f;
+        { 
+            SoundController.Instance.PlaySound(Sounds.GameOverSound);
+            //Time.timeScale = 0f;          
             LevelObject.SetActive(false);
             ScoreUIObject.SetActive(false);
             GameOverPanel.SetActive(true);
@@ -73,10 +76,9 @@ public class GameManager : MonoBehaviour
             FinalScore.text = "Final Score : " + SnakeController.Instance.score;
         }
         else
-        {
-            Time.timeScale = 0f;
+        { 
             SoundController.Instance.PlaySound(Sounds.GameOverSound);
-            Time.timeScale = 0f;
+            //Time.timeScale = 0f;                     
             LevelObject.SetActive(false);
             CoOPScoreUIObject.SetActive(false);
             CoOpGameOverPanel.SetActive(true);
@@ -84,7 +86,6 @@ public class GameManager : MonoBehaviour
     }
     public void PauseGame()
     {
-        
         Time.timeScale = 0f;
         PausePanel.SetActive(true);
         LevelObject.SetActive(false);
@@ -92,10 +93,10 @@ public class GameManager : MonoBehaviour
         PowerUpUIObject.SetActive(false);
         CoOPScoreUIObject.SetActive(false);
     }
-    public void ResumeGame() 
+    public void ResumeGame()
     {
-        SoundController.Instance.PlaySound(Sounds.ButtonClickSound);
         Time.timeScale = 1f;
+        SoundController.Instance.PlaySound(Sounds.ButtonClickSound);
         PausePanel.SetActive(false);
         LevelObject.SetActive(true);
         ScoreUIObject.SetActive(true);
@@ -111,15 +112,50 @@ public class GameManager : MonoBehaviour
         {
             PauseGame();
         }
-    } 
+    }
     public void LoadMenu()
     {
         SoundController.Instance.PlaySound(Sounds.ButtonClickSound);
         SceneManager.LoadScene(0);
-    } 
+    }
     public void RestartGame()
     {
         SoundController.Instance.PlaySound(Sounds.ButtonClickSound);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    internal void GameWonCheck()
+    {
+        if (CoopSnakeController.Instance!=null && CoopSnakeController.Instance.selfcollision == true)
+        {
+            coopwintext.text = ("Snake 1 Won");
+            OnGameOver();
+        }
+        if (SnakeController.Instance != null && SnakeController.Instance.selfcollision == true)
+        {
+            coopwintext.text = ("Snake 2 Won");
+            OnGameOver();
+        }
+    }
+    private void CheckSnakeBite()
+    {
+        if (SnakeController.Instance != null && CoopSnakeController.Instance != null)
+        {
+            Vector3 snake1headPosition = SnakeController.Instance.transform.position;
+            for (int i = 1; i < CoopSnakeController.Instance.snakeSegments.Count; i++)
+            {
+                if (Vector3.Distance(CoopSnakeController.Instance.snakeSegments[i].transform.position, snake1headPosition) < 0.8f)
+                {
+                    SnakeController.Instance.selfcollision = true;
+                }
+            }
+            Vector3 snake2headPosition = CoopSnakeController.Instance.snakeSegments[0].transform.position;
+            for (int i = 1; i < SnakeController.Instance.snakeSegments.Count; i++)
+            {
+                if (Vector3.Distance(snake2headPosition, SnakeController.Instance.snakeSegments[i].transform.position) < 0.8f)
+                {
+                    CoopSnakeController.Instance.selfcollision = true;
+                }
+            }
+        }
     }
 }

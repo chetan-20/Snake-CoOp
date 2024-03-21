@@ -2807,9 +2807,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1663658470}
   - component: {fileID: 1663658474}
+  - component: {fileID: 1663658475}
   - component: {fileID: 1663658472}
   - component: {fileID: 1663658471}
-  - component: {fileID: 1663658475}
   m_Layer: 0
   m_Name: CoopSnake
   m_TagString: CoopSnake
@@ -2825,13 +2825,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1663658469}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 18.49, y: 12.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 794391259}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!61 &1663658471
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2968,7 +2968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8e95fe692f1a44a885e28a4a5db8f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coopsnakeBodyPrefab: {fileID: 3438392576950572236, guid: 9d2554c920e36624f97af6cca13ef126, type: 3}
+  snakeBodyPrefab: {fileID: 3438392576950572236, guid: 9d2554c920e36624f97af6cca13ef126, type: 3}
   snakeSpeed: 7
 --- !u!1 &1691110970
 GameObject:
@@ -4125,13 +4125,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2128136854}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 2.5, y: 9.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 794391259}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!61 &2128136856
 BoxCollider2D:
   m_ObjectHideFlags: 0
