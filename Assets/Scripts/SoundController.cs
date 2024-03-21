@@ -47,6 +47,7 @@ public class SoundController : MonoBehaviour
         {
             SoundMusic.clip = clip;
             SoundMusic.Play();
+            Debug.Log("plaing music");
         }
         else
         {
@@ -60,6 +61,7 @@ public class SoundController : MonoBehaviour
         if (clip != null)
         {
             SoundEffect.PlayOneShot(clip);
+            Debug.Log("plaing clip");
 
         }
         else
