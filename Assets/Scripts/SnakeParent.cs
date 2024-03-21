@@ -30,7 +30,8 @@ public abstract class SnakeParent : MonoBehaviour
         HandleGridMovement();
         SetSpeedBoost();
         ScreenWrap();
-        CheckSelfCollision();   
+        CheckSelfCollision();
+        GameManager.Instance.OnGameOver();
     }
     protected virtual void FixedUpdate()
     {
@@ -117,7 +118,6 @@ public abstract class SnakeParent : MonoBehaviour
             GrowSnake();
         }
     }
-
     protected abstract void CheckSelfCollision();   
     protected abstract void HandleInput();
     protected abstract bool GetShieldStatus();

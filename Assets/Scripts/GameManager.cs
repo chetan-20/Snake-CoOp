@@ -35,8 +35,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         UpdateScoreUI();
-        OnEscapePressed();
-        OnGameOver();
+        OnEscapePressed();      
         CheckSnakeBite();
     }
     private void ActivateCoOPUI()
@@ -102,7 +101,7 @@ public class GameManager : MonoBehaviour
         SoundController.Instance.PlaySound(Sounds.ButtonClickSound);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }  
-    private void OnGameOver()
+    internal void OnGameOver()
     {
         if (CoopSnakeController.Instance == null)
         {
