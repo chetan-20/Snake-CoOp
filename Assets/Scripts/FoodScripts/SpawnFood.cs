@@ -9,6 +9,8 @@ public class SpawnFood : MonoBehaviour
     [SerializeField] private float minSpawntime = 1f;
     [SerializeField] private float maxSpawntime = 5f;
     [SerializeField] private float foodlifetime = 10f;
+    private static int snakeminlength = 5;
+    private static int coopsnakeminlength = 3;
     private GameObject currentapple;
     private GameObject currentbadapple;
     public static SpawnFood Instance;
@@ -38,7 +40,7 @@ public class SpawnFood : MonoBehaviour
     {
         if (CoopSnakeController.Instance == null)//Single Player Active
         {
-            if (currentbadapple == null && SnakeController.Instance.snakeSegments.Count > 5)
+            if (currentbadapple == null && SnakeController.Instance.snakeSegments.Count > snakeminlength)
             {
                 Vector2 spawnposition = GridArea.Instance.GetRandomPosition();
                 currentbadapple = Instantiate(BadApplePrefab, spawnposition, Quaternion.identity);
@@ -47,7 +49,7 @@ public class SpawnFood : MonoBehaviour
         }
         else
         {
-            if (currentbadapple == null && SnakeController.Instance.snakeSegments.Count >3 && CoopSnakeController.Instance.snakeSegments.Count > 3)
+            if (currentbadapple == null && SnakeController.Instance.snakeSegments.Count >coopsnakeminlength && CoopSnakeController.Instance.snakeSegments.Count > coopsnakeminlength)
             {
                 Vector2 spawnposition = GridArea.Instance.GetRandomPosition();
                 currentbadapple = Instantiate(BadApplePrefab, spawnposition, Quaternion.identity);

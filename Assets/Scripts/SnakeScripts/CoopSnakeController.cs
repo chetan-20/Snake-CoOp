@@ -1,20 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public class SnakeController : SnakeParent
+public class CoopSnakeController : SnakeParent
 {
-    public static SnakeController Instance;
+    public static CoopSnakeController Instance;
+
     protected override void Awake()
     {
         base.Awake();
         Instance = this;
-        gridmovedirection = new Vector2Int(1, 0);
-    }   
+        gridmovedirection = new Vector2Int(-1, 0);
+    }
     protected override void HandleInput()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             if (gridmovedirection.y != -1)
             {
@@ -23,16 +23,16 @@ public class SnakeController : SnakeParent
                 RotateSprite(0f);
             }
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             if (gridmovedirection.y != 1)
             {
                 gridmovedirection.y = -1;
                 gridmovedirection.x = 0;
-                RotateSprite(180f);
+                RotateSprite(-180f);
             }
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             if (gridmovedirection.x != -1)
             {
@@ -41,7 +41,7 @@ public class SnakeController : SnakeParent
                 RotateSprite(-90f);
             }
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             if (gridmovedirection.x != 1)
             {
@@ -79,47 +79,24 @@ public class SnakeController : SnakeParent
                 canCheckCollision = true;
             }
         }
-    }    
+    }   
     protected override bool GetShieldStatus()
     {
-        return ShieldPowerUp.Instance != null && ShieldPowerUp.Instance.Getiseaten();
+        return ShieldPowerUp.Instance != null && ShieldPowerUp.Instance.Getcoopiseaten();
     }
     protected override bool GetScoreBoostStatus()
     {
-        return ScoreBooster.Instance != null && ScoreBooster.Instance.Getiseaten();
+        return ScoreBooster.Instance != null && ScoreBooster.Instance.Getcoopiseaten();
     }
     protected override void SetSpeedBoost()
     {
-        if (SpeedBoostScript.Instance != null && SpeedBoostScript.Instance.Getiseaten())
+        if (SpeedBoostScript.Instance != null && SpeedBoostScript.Instance.Getcoopiseaten())
         {
-            snakeSpeed = 10;
+            snakeSpeed = snakeboostspeed;
         }
         else
         {
-            snakeSpeed = 7;
+            snakeSpeed = snakedefaultspeed;
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

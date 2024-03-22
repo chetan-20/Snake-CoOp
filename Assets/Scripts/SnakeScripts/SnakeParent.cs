@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class SnakeParent : MonoBehaviour
-{    
-    internal bool selfcollision = false;
+{       
     [SerializeField] protected GameObject snakeBodyPrefab;
     [SerializeField] protected int snakeSpeed = 7;
+    protected static int snakedefaultspeed = 7;
+    protected static int snakeboostspeed = 10;
     protected Rigidbody2D rb;
     protected Vector2Int gridmovedirection;   
     protected bool canCheckCollision = false;    
-    protected float delaycollisionchecktime = 3f; 
+    protected float delaycollisionchecktime = 3f;
+    protected int defaullength = 4;
+    protected int scoreboost = 10; 
     internal List<Transform> snakeSegments = new List<Transform>();
     internal int score = 0;
-    protected int scoreboost = 10;
+    internal bool selfcollision = false;
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         snakeSegments.Add(transform); // Adding the head
-        DefaultSnakeLength(4);
+        SpawnLength(defaullength);
     }
     private void Start()
     {
@@ -111,7 +114,7 @@ public abstract class SnakeParent : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
-    protected void DefaultSnakeLength(int bodyLength)
+    protected void SpawnLength(int bodyLength)
     {
         for (int i = 0; i < bodyLength; i++)
         {
