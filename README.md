@@ -15,6 +15,8 @@ Random spawns for all Food and PowerUp , they get destroyed if not eaten and new
 Co-Op : Another Snake Added that can move using Arrow Keys
 IF Any of the 2 snake eat other snake's body the lose and Other Snake Wins
 
+WebGL : https://chet00.itch.io/snake-coop
+
 
 https://github.com/chetan-20/Snake-CoOp/assets/36814738/ecab82bf-fca9-49e7-9845-141af96e5acb
 
