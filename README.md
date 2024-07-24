@@ -1,6 +1,12 @@
 # Snake-CoOp
 Classic Snake Game with CoOp
 
+Used Singleton for Sound.
+Used Prefabs for consumables and power-ups.
+Implemented consumables and power-ups that spawn and de-spawn randomly.
+Used Inheritance to implement the cooperative mode.
+
+
 Game Mechancis :
 Snake Uses W,A,S,D to Move
 Snake Dies if it eats its own body part
